@@ -1,0 +1,75 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+
+  # PROGRAMS
+
+  - name: programs
+    label: Programs
+    type: collection
+    path: content/programs
+
+    filename: "{fields.title}.md"
+
+    view:
+      fields:
+        - title
+        - schedule
+
+    fields:
+
+      - name: title
+        label: Program Title
+        type: string
+        required: true
+
+      - name: schedule
+        label: Schedule
+        type: string
+        required: true
+
+      - name: button_text
+        label: Button Text
+        type: string
+        default: VIEW CLASS
+
+      - name: button_link
+        label: Button Link
+        type: string
+        default: /classes
+
+      - name: body
+        label: Description
+        type: rich-text
+
+  # SPONSORS
+
+  - name: sponsors
+    label: Sponsors
+    type: collection
+    path: content/sponsors
+
+    filename: "{fields.name}.md"
+
+    view:
+      fields:
+        - name
+
+    fields:
+
+      - name: name
+        label: Sponsor Name
+        type: string
+        required: true
+
+      - name: logo
+        label: Sponsor Logo
+        type: image
+        required: true
+
+      - name: website
+        label: Website
+        type: string
+        required: true
