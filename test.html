@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Hook Boxing | Founded on Brotherhood. Built on Discipline.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'iron-green': '#84cc16',
+                        'iron-green-dark': '#65a30d',
+                        'iron-dark': '#0a0a0a',
+                        'iron-gray': '#1a1a1a',
+                        'iron-card': '#111111',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { 
+            background: #84cc16; 
+            border-radius: 999px; 
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #65a30d; }
+
+        /* Hero gradient fade */
+        .hero-fade {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6), #0a0a0a);
+        }
+
+        /* Smooth hover transitions */
+        .service-card { transition: transform 0.35s ease; }
+        .service-card:hover { transform: translateY(-10px); }
+
+        /* Program row hover */
+        .program-row { transition: all 0.3s ease; }
+        .program-row:hover {
+            transform: translateY(-5px);
+            border-left: 4px solid #84cc16;
+            background: rgba(132,204,22,0.05);
+        }
+
+        /* Sponsor logo hover */
+        .sponsor-logo {
+            transition: all 0.3s;
+            filter: grayscale(100%);
+            opacity: 0.7;
+        }
+        .sponsor-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* Button glow effect */
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(132, 204, 22, 0.4);
+        }
+
+        /* Nav blur */
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Mobile menu animation */
+        .mobile-menu { transition: transform 0.3s ease-in-out; }
+
+        /* Text gradient for headings */
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 0%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Image placeholder styling */
+        .img-placeholder {
+            background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+    <base target="_blank">
+</head>
+<body class="bg-iron-dark text-white font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl bg-black/40 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3">
+                    <img src="/images/logo.png" alt="IRON HOOK Boxing" class="h-12 w-12 rounded-full object-cover bg-iron-gray" />
+                    <span class="font-black tracking-wide text-lg">IRON HOOK</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-sm font-medium text-white hover:text-iron-green transition-colors">Home</a>
+                    <a href="#about" class="text-sm font-medium text-gray-400 hover:text-iron-green transition-colors">About</a>
+                    <a href="#services" class="text-sm font-medium text-gray-400 hover:text-iron-green transition-colors">Services</a>
+                    <a href="#programs" class="text-sm font-medium text-gray-400 hover:text-iron-green transition-colors">Programs</a>
+                    <a href="#sponsors" class="text-sm font-medium text-gray-400 hover:text-iron-green transition-colors">Sponsors</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="#programs" class="inline-flex items-center px-6 py-3 bg-iron-green text-black text-sm font-bold rounded-full hover:bg-iron-green-dark transition-all btn-glow">
+                        JOIN NOW
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white p-2" aria-label="Toggle menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-iron-gray border-t border-gray-800 mobile-menu">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#home" class="block px-3 py-3 text-base font-medium text-white bg-iron-green/20 rounded-lg">Home</a>
+                <a href="#about" class="block px-3 py-3 text-base font-medium text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors">About</a>
+                <a href="#services" class="block px-3 py-3 text-base font-medium text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors">Services</a>
+                <a href="#programs" class="block px-3 py-3 text-base font-medium text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors">Programs</a>
+                <a href="#sponsors" class="block px-3 py-3 text-base font-medium text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors">Sponsors</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Desktop Background -->
+        <div class="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/hero-desktop.jpg');"></div>
+        <!-- Mobile Background -->
+        <div class="block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/hero-mobile.jpg');"></div>
+        
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black/60"></div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center pt-24">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-8">
+                Founded on
+                <span class="block text-iron-green">Brotherhood.</span>
+                Built on
+                <span class="block text-iron-green">Discipline.</span>
+            </h1>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+                <a href="#programs" class="inline-flex items-center px-8 py-4 bg-iron-green text-black font-bold rounded-full hover:bg-iron-green-dark transition-all btn-glow text-sm tracking-wide">
+                    VIEW PROGRAMS
+                </a>
+                <a href="#sponsors" class="inline-flex items-center px-8 py-4 bg-transparent border-2 border-white/30 text-white font-bold rounded-full hover:border-iron-green hover:text-iron-green transition-all text-sm tracking-wide">
+                    OUR SPONSORS
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom fade -->
+        <div class="absolute bottom-0 left-0 right-0 h-52 hero-fade"></div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-24 bg-iron-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                
+                <!-- Images Column (Overlapping Layout) -->
+                <div class="relative h-[650px] w-full">
+                    <!-- Background Image (Left) -->
+                    <div class="absolute top-10 left-0 w-[45%] h-[70%] rounded-3xl overflow-hidden border border-white/10">
+                        <div class="w-full h-full img-placeholder">About Image 1<br>(Gym Training)</div>
+                    </div>
+                    <!-- Main Portrait Image (Right/Foreground) -->
+                    <div class="absolute right-0 top-0 w-[65%] h-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                        <div class="w-full h-full img-placeholder">About Image 2<br>(Boxing Action)</div>
+                    </div>
+                </div>
+
+                <!-- Content Column -->
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-black mb-8">About Us</h2>
+                    <p class="text-gray-400 leading-relaxed mb-10 text-lg">
+                        Iron Hook Boxing is focused on building confidence, discipline, fitness, and strong community culture through boxing and structured training. We welcome all ages and skill levels in a supportive, respectful environment.
+                    </p>
+
+                    <!-- Value Tags -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-iron-green text-black font-bold text-center py-4 rounded-full hover:bg-iron-green-dark transition-colors cursor-default">Brotherhood</div>
+                        <div class="bg-iron-green text-black font-bold text-center py-4 rounded-full hover:bg-iron-green-dark transition-colors cursor-default">Discipline</div>
+                        <div class="bg-iron-green text-black font-bold text-center py-4 rounded-full hover:bg-iron-green-dark transition-colors cursor-default">Respect</div>
+                        <div class="bg-iron-green text-black font-bold text-center py-4 rounded-full hover:bg-iron-green-dark transition-colors cursor-default">Community</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offered Services Section -->
+    <section id="services" class="py-24 bg-iron-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-black text-center mb-16">Offered Services</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Service Card 1 -->
+                <div class="service-card rounded-3xl overflow-hidden border border-white/10 bg-iron-card">
+                    <div class="relative aspect-[4/5]">
+                        <div class="absolute inset-0 img-placeholder">Group Boxing<br>Classes</div>
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="absolute bottom-0 p-6">
+                            <h3 class="text-2xl font-black">Group Boxing</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="service-card rounded-3xl overflow-hidden border border-white/10 bg-iron-card">
+                    <div class="relative aspect-[4/5]">
+                        <div class="absolute inset-0 img-placeholder">Personal<br>Training</div>
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="absolute bottom-0 p-6">
+                            <h3 class="text-2xl font-black">Personal Training</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="service-card rounded-3xl overflow-hidden border border-white/10 bg-iron-card">
+                    <div class="relative aspect-[4/5]">
+                        <div class="absolute inset-0 img-placeholder">Youth &<br>Beginner Programs</div>
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="absolute bottom-0 p-6">
+                            <h3 class="text-2xl font-black">Youth Programs</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="service-card rounded-3xl overflow-hidden border border-white/10 bg-iron-card">
+                    <div class="relative aspect-[4/5]">
+                        <div class="absolute inset-0 img-placeholder">Athlete &<br>Competition Coaching</div>
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="absolute bottom-0 p-6">
+                            <h3 class="text-2xl font-black">Competition Coaching</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Workout Programs Section -->
+    <section id="programs" class="py-24 bg-iron-dark">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-14">
+                <h2 class="text-4xl md:text-5xl font-black">Workout Programs</h2>
+                <p class="text-gray-400 text-2xl mt-2">Made For You</p>
+            </div>
+
+            <!-- DYNAMIC CONTENT: Replace {{PROGRAMS}} with server-side rendered program list -->
+            <div class="space-y-5">
+                {{PROGRAMS}}
+            </div>
+        </div>
+    </section>
+
+    <!-- Proud Sponsors Section -->
+    <section id="sponsors" class="py-24 bg-iron-dark border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-black text-center mb-16">Proud Sponsors</h2>
+
+            <!-- DYNAMIC CONTENT: Replace {{SPONSORS}} with server-side rendered sponsor logos -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center">
+                {{SPONSORS}}
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram / Social Section -->
+    <section class="py-24 bg-iron-dark border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-14">
+                <h2 class="text-4xl md:text-5xl font-black mb-4">Follow Us</h2>
+                <p class="text-gray-400 text-xl">Latest updates & training</p>
+            </div>
+
+            <!-- Instagram Grid: Responsive 1→2→4 columns with 4:5 Aspect Ratio -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <img src="/images/insta-1.jpg" alt="Instagram post 1" class="rounded-3xl w-full aspect-[4/5] object-cover bg-iron-gray border border-white/10 img-placeholder" onerror="this.classList.add('img-placeholder');this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22 viewBox=%220 0 400 500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2214%22 text-anchor=%22middle%22 x=%22200%22 y=%22250%22%3EInstagram Post 1%3C/text%3E%3C/svg%3E'">
+                <img src="/images/insta-2.jpg" alt="Instagram post 2" class="rounded-3xl w-full aspect-[4/5] object-cover bg-iron-gray border border-white/10 img-placeholder" onerror="this.classList.add('img-placeholder');this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22 viewBox=%220 0 400 500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2214%22 text-anchor=%22middle%22 x=%22200%22 y=%22250%22%3EInstagram Post 2%3C/text%3E%3C/svg%3E'">
+                <img src="/images/insta-3.jpg" alt="Instagram post 3" class="rounded-3xl w-full aspect-[4/5] object-cover bg-iron-gray border border-white/10 img-placeholder" onerror="this.classList.add('img-placeholder');this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22 viewBox=%220 0 400 500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2214%22 text-anchor=%22middle%22 x=%22200%22 y=%22250%22%3EInstagram Post 3%3C/text%3E%3C/svg%3E'">
+                <img src="/images/insta-4.jpg" alt="Instagram post 4" class="rounded-3xl w-full aspect-[4/5] object-cover bg-iron-gray border border-white/10 img-placeholder" onerror="this.classList.add('img-placeholder');this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22500%22 viewBox=%220 0 400 500%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22500%22/%3E%3Ctext fill=%22%23666%22 font-family=%22sans-serif%22 font-size=%2214%22 text-anchor=%22middle%22 x=%22200%22 y=%22250%22%3EInstagram Post 4%3C/text%3E%3C/svg%3E'">
+            </div>
+
+            <!-- Social Links -->
+            <div class="mt-12 flex justify-center gap-6">
+                <a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-iron-green transition-colors" aria-label="Facebook">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-iron-green transition-colors" aria-label="TikTok">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-iron-gray border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand Column -->
+                <div class="md:col-span-1">
+                    <div class="flex flex-col mb-6">
+                        <span class="text-2xl font-black tracking-wider text-white">IRON HOOK</span>
+                        <span class="text-[10px] font-bold tracking-[0.3em] text-iron-green uppercase">Boxing</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Developed by ehsanagency</p>
+                </div>
+
+                <!-- About Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">About us</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Our Story</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">T & C</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Socials -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Socials</h4>
+                    <ul class="space-y-3">
+                        <li><a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Instagram</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Facebook</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Tiktok</a></li>
+                    </ul>
+                </div>
+
+                <!-- Visit Us -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Visit us</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        646 North East Road,<br>
+                        Adelaide, South Australia
+                    </p>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm text-center md:text-left">
+                    Copyright © 2026 Iron Hook | Powered by Astra WordPress Theme
+                </p>
+                <button id="scroll-top" class="flex items-center gap-2 text-gray-400 hover:text-iron-green transition-colors text-sm group">
+                    <span>Scroll to Top</span>
+                    <svg class="w-4 h-4 transform group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('bg-iron-dark/90', 'nav-blur', 'border-b', 'border-gray-800');
+            } else {
+                navbar.classList.remove('bg-iron-dark/90', 'nav-blur', 'border-b', 'border-gray-800');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Scroll to top
+        document.getElementById('scroll-top')?.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section > div').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
