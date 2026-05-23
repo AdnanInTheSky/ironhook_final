@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Iron Hook Boxing</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            theme: {
+
+                extend: {
+
+                    colors: {
+
+                        'iron-green': '#84cc16',
+                        'iron-green-dark': '#65a30d',
+                        'iron-card': '#111111'
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+    <style>
+
+        body {
+            background: #0a0a0a;
+        }
+
+        .program-row {
+            transition: 0.3s;
+        }
+
+        .program-row:hover {
+            transform: translateY(-4px);
+        }
+
+        .sponsor-logo {
+            transition: 0.3s;
+            filter: grayscale(100%);
+            opacity: 0.7;
+        }
+
+        .sponsor-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+    </style>
+
+</head>
+
+<body class="bg-black text-white">
+
+    <!-- HERO -->
+
+    <section class="relative min-h-screen overflow-hidden flex items-center justify-center">
+
+        <!-- DESKTOP HERO -->
+
+        <div
+            class="hidden md:block absolute inset-0 bg-cover bg-center"
+            style="background-image:url('/images/hero-desktop.jpg');"
+        ></div>
+
+        <!-- MOBILE HERO -->
+
+        <div
+            class="block md:hidden absolute inset-0 bg-cover bg-center"
+            style="background-image:url('/images/hero-mobile.jpg');"
+        ></div>
+
+        <div class="absolute inset-0 bg-black/60"></div>
+
+        <div class="relative z-10 text-center px-4">
+
+            <h1 class="text-5xl md:text-7xl font-black leading-tight">
+
+                Founded on
+                <span class="text-iron-green block">
+                    Brotherhood.
+                </span>
+
+                Built on
+                <span class="text-iron-green block">
+                    Discipline.
+                </span>
+
+            </h1>
+
+            <div class="mt-10 flex justify-center gap-4 flex-wrap">
+
+                <a
+                    href="#programs"
+                    class="px-8 py-4 rounded-full bg-iron-green text-black font-black"
+                >
+                    VIEW PROGRAMS
+                </a>
+
+                <a
+                    href="#sponsors"
+                    class="px-8 py-4 rounded-full border border-white/20"
+                >
+                    OUR SPONSORS
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PROGRAMS -->
+
+    <section
+        id="programs"
+        class="py-24"
+    >
+
+        <div class="max-w-5xl mx-auto px-4">
+
+            <div class="mb-14">
+
+                <h2 class="text-5xl font-black mb-4">
+                    Workout Programs
+                </h2>
+
+                <p class="text-gray-400 text-xl">
+                    Structured training for every level.
+                </p>
+
+            </div>
+
+            <div class="space-y-5">
+
+                {{PROGRAMS}}
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SPONSORS -->
+
+    <section
+        id="sponsors"
+        class="py-24 border-t border-white/10"
+    >
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="mb-16 text-center">
+
+                <h2 class="text-5xl font-black mb-4">
+                    Proud Sponsors
+                </h2>
+
+                <p class="text-gray-400 text-xl">
+                    Partners supporting our athletes.
+                </p>
+
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+
+                {{SPONSORS}}
+
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
