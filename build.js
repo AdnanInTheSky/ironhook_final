@@ -37,6 +37,9 @@ const fixImg = (p) => {
 const SHARED_HEAD = `
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Get in touch with Iron Hook Boxing. Book a free class, ask about memberships, or reach out with any questions.">
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/images/Screenshot 2026-05-23 215930-Photoroom.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
