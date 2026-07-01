@@ -38,6 +38,7 @@ const SHARED_HEAD = `
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/tailwindcss-motion@latest/dist/index.global.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -52,8 +53,22 @@ tailwind.config = {
         'ygreen-dark':'#6b8e23','ygreen-top':'#8db800','ygreen-bottom':'#5a7a00'
       }
     }
-  }
+  },
+  plugins: [window.tailwindcssMotion]
 };
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      if (iconOpen) iconOpen.classList.toggle('hidden');
+      if (iconClose) iconClose.classList.toggle('hidden');
+    });
+  }
+});
 </script>
 <style>
 body{background:#0a0a0a}
@@ -82,39 +97,74 @@ body{background:#0a0a0a}
 .post-content pre{background:#111;padding:1rem;border-radius:8px;overflow-x:auto;margin:1rem 0}
 .back-link{display:inline-flex;align-items:center;gap:0.5rem;color:#84cc16;font-weight:500;text-decoration:none;transition:gap 0.2s}
 .back-link:hover{gap:0.75rem}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: float 4s ease-in-out infinite; }
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(132,204,22,0.3); }
+  50% { box-shadow: 0 0 40px rgba(132,204,22,0.6); }
+}
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+@media (max-width: 640px) {
+  .post-content h1 { font-size: 1.75rem; }
+  .post-content h2 { font-size: 1.35rem; }
+  .post-content h3 { font-size: 1.15rem; }
+}
 </style>
 `;
 
 const NAV = `
-<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/5">
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/5 motion-preset-slide-down motion-duration-1000">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="h-20 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
+      <a href="/" class="flex items-center gap-3 motion-preset-fade motion-delay-200">
         <img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Iron Hook Boxing Logo" class="h-12 w-auto">
       </a>
+      
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
       <div class="hidden md:flex items-center gap-8">
-        <a href="/" class="hover:text-iron-green transition">Home</a>
-        <a href="/blog.html" class="hover:text-iron-green transition">Blog</a>
-        <a href="/#about" class="hover:text-iron-green transition">About us</a>
-        <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition">Home</a>
-        <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="hover:text-iron-green transition">Make Appointment</a>
-        <a href="/contact.html" class="hover:text-iron-green transition">contact</a>
+        <a href="/" class="hover:text-iron-green transition motion-preset-fade motion-delay-300">Home</a>
+        <a href="/blog.html" class="hover:text-iron-green transition motion-preset-fade motion-delay-400">Blog</a>
+        <a href="/#about" class="hover:text-iron-green transition motion-preset-fade motion-delay-500">About us</a>
+        <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition motion-preset-fade motion-delay-600">Calender</a>
+        <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="hover:text-iron-green transition motion-preset-fade motion-delay-700">Make Appointment</a>
+        <a href="/contact.html" class="hover:text-iron-green transition motion-preset-fade motion-delay-800">contact</a>
       </div>
-      <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="hidden md:inline-flex px-6 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold btn-glow">JOIN NOW</a>
+      <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="hidden md:inline-flex px-6 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold btn-glow animate-pulse-glow motion-preset-slide-right motion-delay-500">JOIN NOW</a>
     </div>
+  </div>
+  
+  <!-- Mobile menu panel -->
+  <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10 p-6 flex flex-col gap-4">
+    <a href="/" class="hover:text-iron-green transition py-2 border-b border-white/5">Home</a>
+    <a href="/blog.html" class="hover:text-iron-green transition py-2 border-b border-white/5">Blog</a>
+    <a href="/#about" class="hover:text-iron-green transition py-2 border-b border-white/5">About us</a>
+    <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition py-2 border-b border-white/5">Calender</a>
+    <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="hover:text-iron-green transition py-2 border-b border-white/5">Make Appointment</a>
+    <a href="/contact.html" class="hover:text-iron-green transition py-2 border-b border-white/5">contact</a>
+    <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="inline-flex px-6 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold btn-glow text-center mt-2">JOIN NOW</a>
   </div>
 </nav>
 `;
 
 const FOOTER = `
-<footer class="bg-iron-gray border-t border-gray-800 pt-16 pb-8">
+<footer class="bg-iron-gray border-t border-gray-800 pt-12 md:pt-16 pb-8 motion-preset-fade">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid md:grid-cols-4 gap-12 mb-12">
-      <div class="md:col-span-1">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+      <div class="sm:col-span-2 md:col-span-1 motion-preset-slide-right motion-delay-100">
         <a href="/" class="flex items-center gap-3"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12 w-auto"></a>
         <p class="text-gray-500 text-sm mt-4">Developed by ehsanagency</p>
       </div>
-      <div>
+      <div class="motion-preset-slide-up motion-delay-200">
         <h4 class="text-white font-bold mb-4">About us</h4>
         <ul class="space-y-3">
           <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Our Story</a></li>
@@ -122,7 +172,7 @@ const FOOTER = `
           <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Privacy Policy</a></li>
         </ul>
       </div>
-      <div>
+      <div class="motion-preset-slide-up motion-delay-300">
         <h4 class="text-white font-bold mb-4">Socials</h4>
         <ul class="space-y-3">
           <li><a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Instagram</a></li>
@@ -130,7 +180,7 @@ const FOOTER = `
           <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Tiktok</a></li>
         </ul>
       </div>
-      <div>
+      <div class="motion-preset-slide-left motion-delay-400">
         <h4 class="text-white font-bold mb-4">Visit us</h4>
         <p class="text-gray-400 text-sm leading-relaxed">646 North East Road,<br>Adelaide, South Australia</p>
       </div>
@@ -143,11 +193,11 @@ const FOOTER = `
 `;
 
 const CTA_SECTION = `
-<section class="py-16 border-t border-white/10">
+<section class="py-12 md:py-16 border-t border-white/10 motion-preset-fade">
   <div class="max-w-4xl mx-auto px-4 text-center">
-    <h2 class="text-3xl md:text-4xl font-black mb-6">Ready to Train?</h2>
-    <p class="text-gray-400 text-lg mb-8">Experience Iron Hook Boxing firsthand with a free introductory class.</p>
-    <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="inline-flex px-8 py-4 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-lg btn-glow">CLAIM YOUR FREE CLASS</a>
+    <h2 class="text-2xl md:text-3xl lg:text-4xl font-black mb-4 md:mb-6 motion-preset-slide-up motion-delay-100">Ready to Train?</h2>
+    <p class="text-gray-400 text-base md:text-lg mb-6 md:mb-8 motion-preset-slide-up motion-delay-200">Experience Iron Hook Boxing firsthand with a free introductory class.</p>
+    <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="inline-flex px-6 md:px-8 py-3 md:py-4 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-base md:text-lg btn-glow animate-pulse-glow motion-preset-expand motion-delay-300">CLAIM YOUR FREE CLASS</a>
   </div>
 </section>
 `;
@@ -166,20 +216,20 @@ function loadCollection(dir) {
 
 // ── Render helpers ─────────────────────────────────────────────────
 function renderPrograms(list) {
-  return list.map((p) => `
-    <div class="program-row bg-iron-card border border-gray-800 rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+  return list.map((p, i) => `
+    <div class="program-row bg-iron-card border border-gray-800 rounded-xl p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 motion-preset-slide-left motion-delay-${(i+1)*100}">
       <div class="flex-1">
         <h3 class="text-lg font-bold text-white mb-2">${esc(p.title)}</h3>
         <div class="text-gray-400 text-sm mb-4">${esc(p.schedule)}</div>
         <div class="text-gray-500 text-sm">${p.content}</div>
       </div>
-      <a href="${esc(p.button_link || "/classes")}" class="inline-flex items-center px-6 py-2.5 bg-iron-green text-black text-sm font-bold rounded-full hover:bg-iron-green-dark transition-all">${esc(p.button_text || "VIEW CLASS")}</a>
+      <a href="${esc(p.button_link || "/classes")}" class="inline-flex items-center justify-center px-6 py-2.5 bg-iron-green text-black text-sm font-bold rounded-full hover:bg-iron-green-dark transition-all w-full md:w-auto">${esc(p.button_text || "VIEW CLASS")}</a>
     </div>`).join("");
 }
 
 function renderSponsors(list) {
-  return list.map((s) => `
-    <a href="${esc(s.website)}" target="_blank" rel="noopener noreferrer" class="sponsor-logo bg-iron-card border border-gray-800 rounded-xl p-2 flex items-center justify-center aspect-[3/2] overflow-hidden">
+  return list.map((s, i) => `
+    <a href="${esc(s.website)}" target="_blank" rel="noopener noreferrer" class="sponsor-logo bg-iron-card border border-gray-800 rounded-xl p-2 flex items-center justify-center aspect-[3/2] overflow-hidden motion-preset-fade motion-delay-${(i+1)*100}">
       <img src="${fixImg(s.logo)}" alt="${esc(s.name)}" class="w-full h-full object-contain" loading="lazy" />
     </a>`).join("");
 }
@@ -188,7 +238,7 @@ function blogCard(post, url) {
   const tags = post.data.tags?.map((t) => `<span class="tag">#${esc(t)}</span>`).join("") ?? "";
   const excerpt = esc(post.data.excerpt || post.content.substring(0, 160).replace(/\n/g, " ").trim() + "...");
   return `
-  <a href="${url}" class="blog-card rounded-2xl overflow-hidden border border-white/10 bg-iron-card p-6 group">
+  <a href="${url}" class="blog-card rounded-2xl overflow-hidden border border-white/10 bg-iron-card p-4 md:p-6 group motion-preset-slide-up">
     <div class="flex flex-col gap-4">
       ${post.data.image ? `
       <div class="w-full h-48 flex-shrink-0 overflow-hidden rounded-xl">
@@ -223,12 +273,12 @@ ${NAV}
 
 <!-- HERO -->
 <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-  <div class="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image:url('/images/Screenshot 2026-05-23 221640.png');"></div>
-  <div class="block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image:url('/images/Screenshot 2026-05-23 221656.png');"></div>
+  <div class="hidden md:block absolute inset-0 bg-cover bg-center bg-no-repeat motion-preset-zoom-in motion-duration-2000" style="background-image:url('/images/Screenshot 2026-05-23 221640.png');"></div>
+  <div class="block md:hidden absolute inset-0 bg-cover bg-center bg-no-repeat motion-preset-zoom-in motion-duration-2000" style="background-image:url('/images/Screenshot 2026-05-23 221656.png');"></div>
   <div class="relative z-10 text-center max-w-5xl px-4 pt-24">
-    <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight">Founded on Brotherhood. <span>Built on Discipline.</span></h1>
-    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-      <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="px-6 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-sm font-bold uppercase tracking-wide btn-glow">EXPERIENCE YOUR FREE CLASS</a>
+    <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black leading-tight motion-preset-slide-up motion-duration-1500">Founded on Brotherhood. <span class="text-iron-green">Built on Discipline.</span></h1>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4 motion-preset-slide-up motion-delay-500">
+      <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="px-6 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-sm font-bold uppercase tracking-wide btn-glow animate-pulse-glow">EXPERIENCE YOUR FREE CLASS</a>
       <a href="https://ironhookboxing.sites.zenplanner.com/login.cfm" class="px-6 py-3 rounded-full border border-white/20 hover:border-iron-green hover:text-iron-green transition text-sm font-medium uppercase tracking-wide">CLAIM YOUR MEMBERSHIP</a>
     </div>
   </div>
@@ -236,25 +286,25 @@ ${NAV}
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="py-24">
+<section id="about" class="py-16 md:py-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-20 items-center">
-      <div class="relative h-[650px]">
-        <div class="absolute top-10 left-0 w-[45%] h-[70%] rounded-3xl overflow-hidden border border-white/10">
+    <div class="grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
+      <div class="relative h-[350px] sm:h-[450px] md:h-[650px] motion-preset-slide-right motion-duration-1500">
+        <div class="absolute top-5 left-0 w-[45%] h-[60%] md:top-10 md:h-[70%] rounded-3xl overflow-hidden border border-white/10 animate-float">
           <img src="/images/Screenshot 2026-05-23 222250.png" alt="Gym" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="absolute right-0 top-0 w-[65%] h-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+        <div class="absolute right-0 top-0 w-[65%] h-[85%] md:h-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
           <img src="/images/Screenshot 2026-05-23 222239.png" alt="Boxing" class="w-full h-full object-cover" loading="lazy">
         </div>
       </div>
-      <div>
-        <h2 class="text-5xl font-black mb-8">About Us</h2>
-        <p class="text-gray-400 text-lg leading-relaxed mb-10">Iron Hook Boxing is focused on building confidence, discipline, fitness, and strong community culture through boxing and structured training.</p>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-4 rounded-full">Brotherhood</div>
-          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-4 rounded-full">Discipline</div>
-          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-4 rounded-full">Respect</div>
-          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-4 rounded-full">Community</div>
+      <div class="motion-preset-slide-left motion-duration-1500">
+        <h2 class="text-3xl md:text-5xl font-black mb-6 md:mb-8">About Us</h2>
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed mb-8 md:mb-10">Iron Hook Boxing is focused on building confidence, discipline, fitness, and strong community culture through boxing and structured training.</p>
+        <div class="grid grid-cols-2 gap-3 md:gap-4">
+          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-3 md:py-4 rounded-full text-sm md:text-base motion-preset-slide-up motion-delay-100">Brotherhood</div>
+          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-3 md:py-4 rounded-full text-sm md:text-base motion-preset-slide-up motion-delay-200">Discipline</div>
+          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-3 md:py-4 rounded-full text-sm md:text-base motion-preset-slide-up motion-delay-300">Respect</div>
+          <div class="bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold text-center py-3 md:py-4 rounded-full text-sm md:text-base motion-preset-slide-up motion-delay-400">Community</div>
         </div>
       </div>
     </div>
@@ -262,12 +312,12 @@ ${NAV}
 </section>
 
 <!-- SERVICES -->
-<section id="services" class="py-24">
+<section id="services" class="py-16 md:py-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-5xl font-black text-center mb-16">Offered Services</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <h2 class="text-3xl md:text-5xl font-black text-center mb-10 md:mb-16 motion-preset-slide-up">Offered Services</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       ${["Group Boxing","Personal Training","Youth Programs","Competition Coaching"].map((t,i) => `
-      <div class="service-card rounded-3xl overflow-hidden border border-white/10 bg-iron-card">
+      <div class="service-card rounded-3xl overflow-hidden border border-white/10 bg-iron-card motion-preset-slide-up motion-delay-${(i+1)*100}">
         <div class="relative aspect-[4/5]">
           <img src="/images/Screenshot 2026-05-23 221656.png" alt="${t}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
           <div class="absolute inset-0 bg-black/40"></div>
@@ -279,34 +329,34 @@ ${NAV}
 </section>
 
 <!-- PROGRAMS -->
-<section id="programs" class="py-24">
+<section id="programs" class="py-16 md:py-24">
   <div class="max-w-5xl mx-auto px-4">
-    <div class="mb-14">
-      <h2 class="text-5xl font-black">Workout Programs</h2>
-      <p class="text-gray-400 text-2xl mt-2">Made For You</p>
+    <div class="mb-10 md:mb-14 motion-preset-slide-right">
+      <h2 class="text-3xl md:text-5xl font-black">Workout Programs</h2>
+      <p class="text-gray-400 text-lg md:text-2xl mt-2">Made For You</p>
     </div>
     <div class="space-y-5">${programsHtml}</div>
   </div>
 </section>
 
 <!-- SPONSORS -->
-<section id="sponsors" class="py-24 border-t border-white/10">
+<section id="sponsors" class="py-16 md:py-24 border-t border-white/10">
   <div class="max-w-7xl mx-auto px-4">
-    <h2 class="text-5xl font-black text-center mb-16">Proud Sponsors</h2>
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-8">${sponsorsHtml}</div>
+    <h2 class="text-3xl md:text-5xl font-black text-center mb-10 md:mb-16 motion-preset-slide-up">Proud Sponsors</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8">${sponsorsHtml}</div>
   </div>
 </section>
 
 <!-- INSTAGRAM -->
-<section id="social" class="py-20 md:py-32 bg-iron-dark border-t border-gray-800">
+<section id="social" class="py-16 md:py-32 bg-iron-dark border-t border-gray-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-black mb-4">Follow us on Social</h2>
-      <p class="text-xl text-gray-400">Never miss an update!</p>
+    <div class="text-center mb-10 md:mb-16 motion-preset-slide-up">
+      <h2 class="text-3xl md:text-5xl font-black mb-4">Follow us on Social</h2>
+      <p class="text-lg md:text-xl text-gray-400">Never miss an update!</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
-      ${[ "https://www.instagram.com/reel/DXogRySD0CX/", "https://www.instagram.com/p/DXTrzaTFXfy/", "https://www.instagram.com/p/DXL-i6hE87r/", "https://www.instagram.com/p/DXBXr-vE_I3/" ].map((url) => `
-      <div class="bg-white rounded-xl p-3 shadow-lg flex-shrink-0 w-full max-w-[340px] mx-auto">
+      ${[ "https://www.instagram.com/reel/DXogRySD0CX/", "https://www.instagram.com/p/DXTrzaTFXfy/", "https://www.instagram.com/p/DXL-i6hE87r/", "https://www.instagram.com/p/DXBXr-vE_I3/" ].map((url, i) => `
+      <div class="bg-white rounded-xl p-3 shadow-lg flex-shrink-0 w-full max-w-[340px] mx-auto motion-preset-slide-up motion-delay-${(i+1)*100}">
         <div class="aspect-[4/5] w-full overflow-hidden rounded-lg bg-gray-50">
           <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${url}?utm_source=ig_embed&utm_campaign=loading" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;width:100%;max-width:100%;min-width:0;height:100%;">
             <div style="padding:16px;height:100%;">
@@ -350,7 +400,7 @@ ${NAV}
         </div>
       </div>`).join("")}
     </div>
-    <div class="mt-12 flex justify-center gap-6">
+    <div class="mt-12 flex justify-center gap-6 motion-preset-slide-up motion-delay-500">
       <a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors" target="_blank" rel="noopener noreferrer">
         <span class="sr-only">Instagram</span>
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -391,12 +441,12 @@ function buildBlogList(posts) {
 ${NAV}
 
 <section class="relative pt-32 pb-16 overflow-hidden">
-  <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image:url('/images/Screenshot 2026-05-23 221640.png');"></div>
+  <div class="absolute inset-0 bg-cover bg-center opacity-20 motion-preset-zoom-in motion-duration-2000" style="background-image:url('/images/Screenshot 2026-05-23 221640.png');"></div>
   <div class="absolute inset-0 bg-gradient-to-b from-iron-dark/80 to-iron-dark"></div>
   <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-    <span class="inline-block px-4 py-1 rounded-full bg-iron-green/20 text-iron-green text-sm font-medium mb-4">Latest Updates</span>
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">The Iron Hook Journal</h1>
-    <p class="mt-4 text-gray-400 text-lg max-w-2xl mx-auto">Training tips, community stories, and insights from the Iron Hook family.</p>
+    <span class="inline-block px-4 py-1 rounded-full bg-iron-green/20 text-iron-green text-sm font-medium mb-4 motion-preset-slide-down motion-delay-200">Latest Updates</span>
+    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight motion-preset-slide-up motion-delay-300">The Iron Hook Journal</h1>
+    <p class="mt-4 text-gray-400 text-lg max-w-2xl mx-auto motion-preset-slide-up motion-delay-500">Training tips, community stories, and insights from the Iron Hook family.</p>
   </div>
 </section>
 
@@ -416,7 +466,7 @@ ${FOOTER}
 function buildBlogPost(post) {
   const tags = post.data.tags?.map((t) => `<span class="tag">#${esc(t)}</span>`).join("") ?? "";
   const hero = post.data.image ? fixImg(post.data.image) : "";
-  const heroDiv = hero ? `<div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image:url('${esc(hero)}');"></div>` : "";
+  const heroDiv = hero ? `<div class="absolute inset-0 bg-cover bg-center opacity-30 motion-preset-zoom-in motion-duration-2000" style="background-image:url('${esc(hero)}');"></div>` : "";
   const authorSpan = post.data.author ? `<span>By <strong class="text-white">${esc(post.data.author)}</strong></span>` : "";
 
   const html = `<!DOCTYPE html>
@@ -433,13 +483,13 @@ ${NAV}
   ${heroDiv}
   <div class="absolute inset-0 bg-gradient-to-b from-iron-dark/80 via-iron-dark/90 to-iron-dark"></div>
   <div class="relative z-10 max-w-4xl mx-auto px-4">
-    <a href="/blog.html" class="back-link mb-6">
+    <a href="/blog.html" class="back-link mb-6 inline-block motion-preset-slide-right motion-delay-200">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
       Back to Blog
     </a>
-    <div class="flex flex-wrap gap-2 mb-4">${tags}</div>
-    <h1 class="text-3xl md:text-5xl font-black leading-tight mb-4">${esc(post.data.title)}</h1>
-    <div class="flex items-center gap-4 text-gray-400 text-sm">
+    <div class="flex flex-wrap gap-2 mb-4 motion-preset-fade motion-delay-300">${tags}</div>
+    <h1 class="text-2xl sm:text-3xl md:text-5xl font-black leading-tight mb-4 motion-preset-slide-up motion-delay-400">${esc(post.data.title)}</h1>
+    <div class="flex items-center gap-4 text-gray-400 text-sm motion-preset-slide-up motion-delay-500">
       ${authorSpan}
       <time datetime="${post.data.date}" class="flex items-center gap-1">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -449,7 +499,7 @@ ${NAV}
   </div>
 </section>
 
-<main class="py-12"><article class="max-w-4xl mx-auto px-4 post-content">${md.render(post.content)}</article></main>
+<main class="py-12"><article class="max-w-4xl mx-auto px-4 post-content motion-preset-fade motion-delay-700">${md.render(post.content)}</article></main>
 
 ${CTA_SECTION}
 ${FOOTER}
