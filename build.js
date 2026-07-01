@@ -23,7 +23,7 @@ const CONFIG = {
   programsDir: "./content/programs",
   sponsorsDir: "./content/sponsors",
   mainTemplate: "./template.html",
-  mainOutput: "./index.html", // Changed to root
+  mainOutput: "./index.html",
   
   // Blog
   blogContentDir: "./content/blog",
@@ -56,6 +56,20 @@ function ensureDir(dir) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
+}
+
+// Helper to fix image paths since images are now in /public/images/
+function fixImagePath(imgPath) {
+  if (!imgPath) return '';
+  // If path is absolute like /images/logo.png
+  if (imgPath.startsWith('/images/')) {
+    return '/public' + imgPath;
+  }
+  // If path is relative like images/logo.png
+  if (imgPath.startsWith('images/')) {
+    return 'public/' + imgPath;
+  }
+  return imgPath;
 }
 
 // ============ MAIN SITE BUILDERS ============
@@ -96,7 +110,7 @@ function renderSponsors(sponsors) {
   return sponsors.map(sponsor => `
     <a href="${sponsor.website}" target="_blank" 
        class="sponsor-logo bg-iron-card border border-gray-800 rounded-xl p-2 flex items-center justify-center aspect-[3/2] overflow-hidden">
-      <img src="${sponsor.logo}" alt="${sponsor.name}" class="w-full h-full object-contain" />
+      <img src="${fixImagePath(sponsor.logo)}" alt="${sponsor.name}" class="w-full h-full object-contain" />
     </a>
   `).join("");
 }
@@ -115,7 +129,7 @@ function generateBlogCard(post, postUrl) {
     <div class="flex flex-col gap-4">
       ${post.data.image ? `
       <div class="w-full h-48 flex-shrink-0 overflow-hidden rounded-xl">
-        <img src="${escapeHtml(post.data.image)}" 
+        <img src="${escapeHtml(fixImagePath(post.data.image))}" 
              alt="${escapeHtml(post.data.title)}" 
              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
       </div>` : ''}
@@ -140,6 +154,7 @@ function generatePostPage(post) {
   ).join('') || '';
   
   const contentHtml = md.render(post.content);
+  const heroImage = post.data.image ? fixImagePath(post.data.image) : '';
 
   return `
 <!DOCTYPE html>
@@ -194,7 +209,7 @@ function generatePostPage(post) {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="h-20 flex items-center justify-between">
         <a href="/" class="flex items-center gap-3">
-          <img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12">
+          <img src="/public/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12">
         </a>
         <div class="hidden md:flex items-center gap-8">
           <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition">Home</a>
@@ -206,7 +221,7 @@ function generatePostPage(post) {
     </div>
   </nav>
   <section class="relative pt-32 pb-8 overflow-hidden">
-    ${post.data.image ? `<div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image:url('${escapeHtml(post.data.image)}');"></div>` : ''}
+    ${heroImage ? `<div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image:url('${escapeHtml(heroImage)}');"></div>` : ''}
     <div class="absolute inset-0 bg-gradient-to-b from-iron-dark/90 via-iron-dark/95 to-iron-dark"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4">
       <a href="/blog.html" class="back-link mb-6">
@@ -235,7 +250,7 @@ function generatePostPage(post) {
   <footer class="bg-iron-gray border-t border-gray-800 pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-4 gap-12 mb-12">
-        <div class="md:col-span-1"><a href="/" class="flex items-center gap-3"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12"></a><p class="text-gray-500 text-sm mt-4">Developed by ehsanagency</p></div>
+        <div class="md:col-span-1"><a href="/" class="flex items-center gap-3"><img src="/public/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12"></a><p class="text-gray-500 text-sm mt-4">Developed by ehsanagency</p></div>
         <div><h4 class="text-white font-bold mb-4">About us</h4><ul class="space-y-3"><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Our Story</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">T & C</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Privacy Policy</a></li></ul></div>
         <div><h4 class="text-white font-bold mb-4">Socials</h4><ul class="space-y-3"><li><a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Instagram</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Facebook</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Tiktok</a></li></ul></div>
         <div><h4 class="text-white font-bold mb-4">Visit us</h4><p class="text-gray-400 text-sm leading-relaxed">646 North East Road,<br>Adelaide, South Australia</p></div>
