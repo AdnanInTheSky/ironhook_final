@@ -45,6 +45,7 @@
         .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #84cc16; font-weight: 500; text-decoration: none; transition: gap 0.2s; }
         .back-link:hover { gap: 0.75rem; }
     </style>
+<base target="_blank">
 </head>
 <body class="text-white font-sans antialiased">
 
@@ -52,9 +53,10 @@
     <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="h-20 flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12"></a>
+                <a href="/" class="flex items-center gap-3"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Iron Hook Boxing Logo" class="h-12 w-auto"></a>
                 <div class="hidden md:flex items-center gap-8">
                     <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition">Home</a>
+                    <a href="/blog.html" class="hover:text-iron-green transition">Blog</a>
                     <a href="/#about" class="hover:text-iron-green transition">About us</a>
                     <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="hover:text-iron-green transition">Make Appointment</a>
                 </div>
@@ -65,7 +67,7 @@
 
     <!-- POST HERO -->
     <section class="relative pt-32 pb-8 overflow-hidden">
-        {{#POST_IMAGE}}<div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image:url('{{POST_IMAGE}}');"></div>{{/POST_IMAGE}}
+        <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image:url('{{POST_IMAGE}}');"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-iron-dark/90 via-iron-dark/95 to-iron-dark"></div>
         <div class="relative z-10 max-w-4xl mx-auto px-4">
             <a href="/blog.html" class="back-link mb-6">
@@ -75,7 +77,7 @@
             <div class="flex flex-wrap gap-2 mb-4">{{POST_TAGS}}</div>
             <h1 class="text-3xl md:text-5xl font-black leading-tight mb-4">{{POST_TITLE}}</h1>
             <div class="flex items-center gap-4 text-gray-400 text-sm">
-                {{#POST_AUTHOR}}<span>By <strong class="text-white">{{POST_AUTHOR}}</strong></span>{{/POST_AUTHOR}}
+                <span>By <strong class="text-white">{{POST_AUTHOR}}</strong></span>
                 <time datetime="{{POST_DATE}}" class="flex items-center gap-1">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     {{POST_DATE_FORMATTED}}
@@ -102,7 +104,7 @@
     <footer class="bg-iron-gray border-t border-gray-800 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div class="md:col-span-1"><a href="/" class="flex items-center gap-3"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12"></a><p class="text-gray-500 text-sm mt-4">Developed by ehsanagency</p></div>
+                <div class="md:col-span-1"><a href="/" class="flex items-center gap-3"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Iron Hook Boxing Logo" class="h-12 w-auto"></a><p class="text-gray-500 text-sm mt-4">Developed by ehsanagency</p></div>
                 <div><h4 class="text-white font-bold mb-4">About us</h4><ul class="space-y-3"><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Our Story</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">T & C</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Privacy Policy</a></li></ul></div>
                 <div><h4 class="text-white font-bold mb-4">Socials</h4><ul class="space-y-3"><li><a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Instagram</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Facebook</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Tiktok</a></li></ul></div>
                 <div><h4 class="text-white font-bold mb-4">Visit us</h4><p class="text-gray-400 text-sm leading-relaxed">646 North East Road,<br>Adelaide, South Australia</p></div>

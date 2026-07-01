@@ -24,7 +24,7 @@ const CONFIG = {
   sponsorsDir: "./content/sponsors",
   mainTemplate: "./template.html",
   mainOutput: "./index.html",
-  
+
   // Blog
   blogContentDir: "./content/blog",
   blogOutputDir: "./blog",
@@ -58,16 +58,21 @@ function ensureDir(dir) {
   }
 }
 
-// Helper to fix image paths since images are now in /public/images/
+// Helper to fix image paths for Vercel static deployment
+// Images in public/images/ are served at /images/ on Vercel
 function fixImagePath(imgPath) {
   if (!imgPath) return '';
-  // If path is absolute like /images/logo.png
+  // If path already starts with /images/, keep it
   if (imgPath.startsWith('/images/')) {
-    return '/public' + imgPath;
+    return imgPath;
+  }
+  // If path starts with public/images/, convert to /images/
+  if (imgPath.startsWith('public/images/')) {
+    return imgPath.replace('public/images/', '/images/');
   }
   // If path is relative like images/logo.png
   if (imgPath.startsWith('images/')) {
-    return 'public/' + imgPath;
+    return '/' + imgPath;
   }
   return imgPath;
 }
@@ -75,13 +80,13 @@ function fixImagePath(imgPath) {
 // ============ MAIN SITE BUILDERS ============
 function loadMarkdown(folder) {
   if (!fs.existsSync(folder)) return [];
-  
+
   const files = fs.readdirSync(folder).filter(f => f.endsWith('.md'));
-  
+
   return files.map(file => {
     const raw = fs.readFileSync(path.join(folder, file), "utf-8");
     const parsed = matter(raw);
-    
+
     return {
       ...parsed.data,
       content: md.render(parsed.content),
@@ -94,13 +99,13 @@ function renderPrograms(programs) {
   return programs.map(program => `
     <div class="program-row bg-iron-card border border-gray-800 rounded-xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div class="flex-1">
-        <h3 class="text-lg font-bold text-white mb-2">${program.title}</h3>
-        <div class="text-gray-400 text-sm mb-4">${program.schedule}</div>
+        <h3 class="text-lg font-bold text-white mb-2">${escapeHtml(program.title)}</h3>
+        <div class="text-gray-400 text-sm mb-4">${escapeHtml(program.schedule)}</div>
         <div class="text-gray-500 text-sm">${program.content}</div>
       </div>
-      <a href="${program.button_link}" 
+      <a href="${escapeHtml(program.button_link || '/classes')}" 
          class="inline-flex items-center px-6 py-2.5 bg-iron-green text-black text-sm font-bold rounded-full hover:bg-iron-green-dark transition-all">
-        ${program.button_text}
+        ${escapeHtml(program.button_text || 'VIEW CLASS')}
       </a>
     </div>
   `).join("");
@@ -108,9 +113,9 @@ function renderPrograms(programs) {
 
 function renderSponsors(sponsors) {
   return sponsors.map(sponsor => `
-    <a href="${sponsor.website}" target="_blank" 
+    <a href="${escapeHtml(sponsor.website)}" target="_blank" rel="noopener noreferrer"
        class="sponsor-logo bg-iron-card border border-gray-800 rounded-xl p-2 flex items-center justify-center aspect-[3/2] overflow-hidden">
-      <img src="${fixImagePath(sponsor.logo)}" alt="${sponsor.name}" class="w-full h-full object-contain" />
+      <img src="${fixImagePath(sponsor.logo)}" alt="${escapeHtml(sponsor.name)}" class="w-full h-full object-contain" loading="lazy" />
     </a>
   `).join("");
 }
@@ -120,7 +125,7 @@ function generateBlogCard(post, postUrl) {
   const tagsHtml = post.data.tags?.map(tag => 
     `<span class="tag">#${escapeHtml(tag)}</span>`
   ).join('') || '';
-  
+
   const excerpt = post.data.excerpt || 
                  post.content.substring(0, 160).replace(/\n/g, ' ').trim() + '...';
 
@@ -131,7 +136,8 @@ function generateBlogCard(post, postUrl) {
       <div class="w-full h-48 flex-shrink-0 overflow-hidden rounded-xl">
         <img src="${escapeHtml(fixImagePath(post.data.image))}" 
              alt="${escapeHtml(post.data.title)}" 
-             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+             loading="lazy">
       </div>` : ''}
       <div>
         <div class="flex items-center gap-3 text-sm text-gray-500 mb-2">
@@ -152,12 +158,11 @@ function generatePostPage(post) {
   const tagsHtml = post.data.tags?.map(tag => 
     `<span class="tag">#${escapeHtml(tag)}</span>`
   ).join('') || '';
-  
+
   const contentHtml = md.render(post.content);
   const heroImage = post.data.image ? fixImagePath(post.data.image) : '';
 
-  return `
-<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
@@ -209,10 +214,11 @@ function generatePostPage(post) {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="h-20 flex items-center justify-between">
         <a href="/" class="flex items-center gap-3">
-          <img src="/public/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12">
+          <img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Iron Hook Boxing Logo" class="h-12 w-auto">
         </a>
         <div class="hidden md:flex items-center gap-8">
           <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition">Home</a>
+          <a href="/blog.html" class="hover:text-iron-green transition">Blog</a>
           <a href="/#about" class="hover:text-iron-green transition">About us</a>
           <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="hover:text-iron-green transition">Make Appointment</a>
         </div>
@@ -221,8 +227,8 @@ function generatePostPage(post) {
     </div>
   </nav>
   <section class="relative pt-32 pb-8 overflow-hidden">
-    ${heroImage ? `<div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image:url('${escapeHtml(heroImage)}');"></div>` : ''}
-    <div class="absolute inset-0 bg-gradient-to-b from-iron-dark/90 via-iron-dark/95 to-iron-dark"></div>
+    ${heroImage ? `<div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image:url('${escapeHtml(heroImage)}');"></div>` : ''}
+    <div class="absolute inset-0 bg-gradient-to-b from-iron-dark/80 via-iron-dark/90 to-iron-dark"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-4">
       <a href="/blog.html" class="back-link mb-6">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -250,7 +256,7 @@ function generatePostPage(post) {
   <footer class="bg-iron-gray border-t border-gray-800 pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-4 gap-12 mb-12">
-        <div class="md:col-span-1"><a href="/" class="flex items-center gap-3"><img src="/public/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12"></a><p class="text-gray-500 text-sm mt-4">Developed by ehsanagency</p></div>
+        <div class="md:col-span-1"><a href="/" class="flex items-center gap-3"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-12 w-auto"></a><p class="text-gray-500 text-sm mt-4">Developed by ehsanagency</p></div>
         <div><h4 class="text-white font-bold mb-4">About us</h4><ul class="space-y-3"><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Our Story</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">T & C</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Privacy Policy</a></li></ul></div>
         <div><h4 class="text-white font-bold mb-4">Socials</h4><ul class="space-y-3"><li><a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Instagram</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Facebook</a></li><li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm">Tiktok</a></li></ul></div>
         <div><h4 class="text-white font-bold mb-4">Visit us</h4><p class="text-gray-400 text-sm leading-relaxed">646 North East Road,<br>Adelaide, South Australia</p></div>
@@ -265,16 +271,16 @@ function generatePostPage(post) {
 function renderBlogListing(template, posts) {
   const hasPosts = posts.length > 0;
   let cardsHtml = '';
-  
+
   if (hasPosts) {
     cardsHtml = posts.map(post => {
       const postUrl = `./blog/${post.slug}.html`;
       return generateBlogCard(post, postUrl);
     }).join('\n');
   }
-  
+
   let result = template;
-  
+
   if (hasPosts) {
     result = result.replace(/{{#HAS_POSTS}}[\s\S]*?{{\/HAS_POSTS}}/, `<div class="grid md:grid-cols-2 gap-6">\n${cardsHtml}\n</div>`);
     result = result.replace(/{{\^HAS_POSTS}}[\s\S]*?{{\/\^HAS_POSTS}}/, '');
@@ -282,7 +288,7 @@ function renderBlogListing(template, posts) {
     result = result.replace(/{{#HAS_POSTS}}[\s\S]*?{{\/HAS_POSTS}}/, '');
     result = result.replace(/{{\^HAS_POSTS}}[\s\S]*?{{\/\^HAS_POSTS}}/, '<div class="text-center py-20 bg-iron-card rounded-2xl border border-white/10"><p class="text-gray-400 text-lg">No blog posts yet.</p><p class="text-gray-500 text-sm mt-2">Check back soon!</p></div>');
   }
-  
+
   result = result.replace(/{{BLOG_CARDS}}/g, cardsHtml);
   return result;
 }
@@ -290,43 +296,43 @@ function renderBlogListing(template, posts) {
 // ============ BUILD FUNCTIONS ============
 function buildMainSite() {
   console.log('🔨 Building main site...');
-  
+
   const programs = loadMarkdown(CONFIG.programsDir);
   const sponsors = loadMarkdown(CONFIG.sponsorsDir);
-  
+
   // Optional: generate data.json for JS consumption (now in root)
   fs.writeFileSync("./data.json", JSON.stringify({ programs, sponsors }, null, 2));
-  
+
   const template = fs.readFileSync(CONFIG.mainTemplate, "utf-8");
   const finalHTML = template
     .replace("{{PROGRAMS}}", renderPrograms(programs))
     .replace("{{SPONSORS}}", renderSponsors(sponsors));
-  
+
   fs.writeFileSync(CONFIG.mainOutput, finalHTML);
   console.log(`✅ Main site: ${CONFIG.mainOutput}`);
 }
 
 async function buildBlog() {
   console.log('🔨 Building blog...');
-  
+
   // Clean and create blog output dir
   if (fs.existsSync(CONFIG.blogOutputDir)) {
     fs.rmSync(CONFIG.blogOutputDir, { recursive: true, force: true });
   }
   ensureDir(CONFIG.blogOutputDir);
-  
+
   // Load blog posts
   if (!fs.existsSync(CONFIG.blogContentDir)) {
     console.log('⚠️ Blog content dir not found:', CONFIG.blogContentDir);
     return;
   }
-  
+
   const files = fs.readdirSync(CONFIG.blogContentDir).filter(f => f.endsWith('.md'));
   if (files.length === 0) {
     console.log('⚠️ No markdown files in', CONFIG.blogContentDir);
     return;
   }
-  
+
   const posts = files.map(file => {
     const raw = fs.readFileSync(path.join(CONFIG.blogContentDir, file), "utf-8");
     const parsed = matter(raw);
@@ -337,9 +343,9 @@ async function buildBlog() {
       content: parsed.content
     };
   }).sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
-  
+
   console.log(`📄 Loaded ${posts.length} blog post${posts.length !== 1 ? 's' : ''}`);
-  
+
   // Generate individual post pages
   for (const post of posts) {
     const postHtml = generatePostPage(post);
@@ -347,20 +353,20 @@ async function buildBlog() {
     fs.writeFileSync(outputPath, postHtml, 'utf-8');
     console.log(`   ✓ Generated: blog/${post.slug}.html`);
   }
-  
+
   // Generate listing page
   const listTemplate = fs.readFileSync(CONFIG.blogListTemplate, "utf-8");
   const listHtml = renderBlogListing(listTemplate, posts);
   fs.writeFileSync(CONFIG.blogListOutput, listHtml, 'utf-8');
   console.log(`✅ Generated: ${CONFIG.blogListOutput}`);
-  
+
   console.log(`📂 Blog posts: ./${CONFIG.blogOutputDir}/`);
 }
 
 // ============ MAIN EXECUTION ============
 async function build() {
   console.log('🚀 Starting full build...\n');
-  
+
   try {
     buildMainSite();
     await buildBlog();
