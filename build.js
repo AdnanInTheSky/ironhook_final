@@ -93,11 +93,12 @@ const NAV = `
         <img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Iron Hook Boxing Logo" class="h-12 w-auto">
       </a>
       <div class="hidden md:flex items-center gap-8">
-        <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition">Home</a>
+        <a href="/" class="hover:text-iron-green transition">Home</a>
         <a href="/blog.html" class="hover:text-iron-green transition">Blog</a>
-        <a href="/contact.html" class="hover:text-iron-green transition">Blog</a>
         <a href="/#about" class="hover:text-iron-green transition">About us</a>
+        <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition">Home</a>
         <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="hover:text-iron-green transition">Make Appointment</a>
+        <a href="/contact.html" class="hover:text-iron-green transition">contact</a>
       </div>
       <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="hidden md:inline-flex px-6 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold btn-glow">JOIN NOW</a>
     </div>
