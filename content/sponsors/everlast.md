@@ -1,5 +1,5 @@
 ---
-name: Everlast
-logo: /images/sponsors/everlast.png
-website: https://everlast.com
+name: Star gaze
+logo: /images/Screenshot 2026-07-01 202711.png
+website: https://ironhook-final.vercel.app
 ---
