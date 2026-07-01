@@ -83,7 +83,6 @@ body{background:#0a0a0a}
 .back-link{display:inline-flex;align-items:center;gap:0.5rem;color:#84cc16;font-weight:500;text-decoration:none;transition:gap 0.2s}
 .back-link:hover{gap:0.75rem}
 </style>
-<base target="_blank">
 `;
 
 const NAV = `
@@ -96,6 +95,7 @@ const NAV = `
       <div class="hidden md:flex items-center gap-8">
         <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="hover:text-iron-green transition">Home</a>
         <a href="/blog.html" class="hover:text-iron-green transition">Blog</a>
+        <a href="/contact.html" class="hover:text-iron-green transition">Blog</a>
         <a href="/#about" class="hover:text-iron-green transition">About us</a>
         <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="hover:text-iron-green transition">Make Appointment</a>
       </div>
