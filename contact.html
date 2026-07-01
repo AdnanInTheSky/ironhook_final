@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <title>Contact | Iron Hook Boxing</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get in touch with Iron Hook Boxing. Book a free class, ask about memberships, or reach out with any questions.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Changed Font to Outfit for a smoother, modern aesthetic -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Outfit', 'sans-serif'] },
+          colors: {
+            'iron-green':'#84cc16','iron-green-dark':'#65a30d','iron-dark':'#0a0a0a',
+            'iron-gray':'#1a1a1a','iron-card':'#111111','ygreen-light':'#d4f5a2',
+            'ygreen-dark':'#6b8e23','ygreen-top':'#8db800','ygreen-bottom':'#5a7a00'
+          },
+          animation: {
+            'fade-in': 'fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'fade-in-up': 'fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'fade-in-down': 'fadeInDown 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'slide-in-left': 'slideInLeft 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'slide-in-right': 'slideInRight 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'zoom-in': 'zoomIn 2s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'expand': 'expand 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'pulse-glow': 'pulseGlow 3.5s ease-in-out infinite',
+            'float': 'float 4s ease-in-out infinite',
+            'draw-check': 'drawCheck 0.8s ease forwards 0.2s',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            },
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            fadeInDown: {
+              '0%': { opacity: '0', transform: 'translateY(-30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInLeft: {
+              '0%': { opacity: '0', transform: 'translateX(-40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' }
+            },
+            slideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(40px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' }
+            },
+            zoomIn: {
+              '0%': { opacity: '0', transform: 'scale(1.05)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            expand: {
+              '0%': { opacity: '0', transform: 'scale(0.95)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(132,204,22,0.2)' },
+              '50%': { boxShadow: '0 0 45px rgba(132,204,22,0.5)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-12px)' }
+            },
+            drawCheck: {
+              '0%': { 'stroke-dashoffset': '60' },
+              '100%': { 'stroke-dashoffset': '0' }
+            }
+          }
+        }
+      }
+    };
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('mobile-menu-button');
+      const menu = document.getElementById('mobile-menu');
+      const iconOpen = document.getElementById('menu-icon-open');
+      const iconClose = document.getElementById('menu-icon-close');
+      if (btn && menu) {
+        btn.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+          if (iconOpen) iconOpen.classList.toggle('hidden');
+          if (iconClose) iconClose.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
+  <style>
+    body { background: #0a0a0a; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #84cc16; border-radius: 999px; }
+    .btn-glow { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .btn-glow:hover { box-shadow: 0 0 30px rgba(132,204,22,0.5); transform: translateY(-2px); }
+    
+    /* Smoother input transitions */
+    .input-field {
+      background: #151515;
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #fff;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #84cc16;
+      background: #1a1a1a;
+      box-shadow: 0 0 0 4px rgba(132,204,22,0.1);
+      transform: translateY(-1px);
+    }
+    .input-field::placeholder { color: #52525b; }
+    .input-field:disabled { opacity: 0.6; cursor: not-allowed; }
+    
+    .input-error { border-color: #ef4444 !important; box-shadow: 0 0 0 4px rgba(239,68,68,0.15) !important; }
+    .error-msg { color: #ef4444; font-size: 0.8rem; margin-top: 0.35rem; display: none; opacity: 0; transition: opacity 0.3s ease; }
+    .error-msg.show { display: block; opacity: 1; }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    .shake { animation: shake 0.4s ease-in-out; }
+    
+    .success-checkmark {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(132,204,22,0.1);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    .success-checkmark:hover { transform: scale(1.05); }
+    .success-checkmark svg {
+      width: 40px; height: 40px;
+      stroke: #84cc16; stroke-width: 3; fill: none;
+      stroke-dasharray: 60; stroke-dashoffset: 60;
+    }
+    
+    .info-card {
+      background: #111111;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .info-card:hover {
+      border-color: rgba(132,204,22,0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px -10px rgba(132,204,22,0.1);
+    }
+    
+    /* Animation Delays */
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+    .delay-800 { animation-delay: 0.8s; }
+    .opacity-0-init { opacity: 0; }
+  </style>
+</head>
+<body class="text-white font-sans antialiased selection:bg-iron-green selection:text-black">
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/50 border-b border-white/5 animate-fade-in-down duration-1000 transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 animate-fade-in delay-200 opacity-0-init transition-transform hover:scale-105">
+        <img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Iron Hook Boxing Logo" class="h-12 w-auto">
+      </a>
+      <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none p-2 transition-transform active:scale-95">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="hidden md:flex items-center gap-8 font-medium">
+        <a href="/" class="text-gray-300 hover:text-iron-green transition-colors animate-fade-in delay-300 opacity-0-init">Home</a>
+        <a href="/blog.html" class="text-gray-300 hover:text-iron-green transition-colors animate-fade-in delay-400 opacity-0-init">Blog</a>
+        <a href="/#about" class="text-gray-300 hover:text-iron-green transition-colors animate-fade-in delay-500 opacity-0-init">About us</a>
+        <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="text-gray-300 hover:text-iron-green transition-colors animate-fade-in delay-600 opacity-0-init">Calendar</a>
+        <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="text-gray-300 hover:text-iron-green transition-colors animate-fade-in delay-700 opacity-0-init">Make Appointment</a>
+        <a href="/contact.html" class="text-iron-green transition-colors animate-fade-in delay-800 opacity-0-init">Contact</a>
+      </div>
+      <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="hidden md:inline-flex px-7 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold btn-glow animate-pulse-glow animate-slide-in-right delay-500 opacity-0-init text-sm tracking-wide">JOIN NOW</a>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10 p-6 flex flex-col gap-4 font-medium">
+    <a href="/" class="text-gray-300 hover:text-iron-green transition-colors py-2 border-b border-white/5">Home</a>
+    <a href="/blog.html" class="text-gray-300 hover:text-iron-green transition-colors py-2 border-b border-white/5">Blog</a>
+    <a href="/#about" class="text-gray-300 hover:text-iron-green transition-colors py-2 border-b border-white/5">About us</a>
+    <a href="https://ironhookboxing.sites.zenplanner.com/calendar.cfm" class="text-gray-300 hover:text-iron-green transition-colors py-2 border-b border-white/5">Calendar</a>
+    <a href="https://ironhookboxing.sites.zenplanner.com/scheduler.cfm" class="text-gray-300 hover:text-iron-green transition-colors py-2 border-b border-white/5">Make Appointment</a>
+    <a href="/contact.html" class="text-iron-green transition-colors py-2 border-b border-white/5">Contact</a>
+    <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="inline-flex px-6 py-3 rounded-full bg-gradient-to-b from-ygreen-top to-ygreen-bottom text-white font-bold btn-glow text-center mt-2 justify-center tracking-wide">JOIN NOW</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative pt-36 pb-20 overflow-hidden">
+  <div class="absolute inset-0 bg-cover bg-center opacity-15 animate-zoom-in duration-2000" style="background-image:url('/images/Screenshot 2026-05-23 221640.png');"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-iron-dark/80 via-iron-dark/95 to-iron-dark"></div>
+  <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+    <span class="inline-block px-5 py-1.5 rounded-full bg-iron-green/10 text-iron-green text-sm font-semibold tracking-wider mb-5 animate-fade-in-down delay-200 opacity-0-init border border-iron-green/20">GET IN TOUCH</span>
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-black leading-tight animate-fade-in-up delay-300 opacity-0-init tracking-tight">Let's Start <span class="text-transparent bg-clip-text bg-gradient-to-r from-iron-green to-ygreen-light">The Conversation</span></h1>
+    <p class="mt-6 text-gray-400 text-lg md:text-xl max-w-2xl mx-auto animate-fade-in-up delay-500 opacity-0-init font-light leading-relaxed">Have a question, want to book a free class, or ready to join the Iron Hook family? We'd love to hear from you.</p>
+  </div>
+</section>
+
+<!-- MAIN CONTACT SECTION (Centered) -->
+<main class="pb-24 pt-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- CENTERED WRAPPER -->
+    <div class="max-w-3xl mx-auto">
+      
+      <!-- CONTACT FORM -->
+      <div class="animate-fade-in-up delay-400 duration-1000 opacity-0-init">
+        <div class="bg-[#111111]/80 backdrop-blur-md border border-white/10 rounded-[2rem] p-8 md:p-12 shadow-2xl shadow-black/50">
+          <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-3 tracking-tight">Send us a message</h2>
+            <p class="text-gray-400 font-light">Fill out the form below and we'll get back to you within 24 hours.</p>
+          </div>
+
+          <form id="contact-form" class="space-y-6" novalidate>
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-sm font-semibold text-gray-300 mb-2.5 ml-1">Full Name <span class="text-iron-green">*</span></label>
+                <input type="text" id="name" name="name" required
+                  class="input-field w-full px-5 py-3.5 rounded-2xl"
+                  placeholder="John Doe">
+                <p class="error-msg" data-for="name">Please enter your name.</p>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-semibold text-gray-300 mb-2.5 ml-1">Email Address <span class="text-iron-green">*</span></label>
+                <input type="email" id="email" name="email" required
+                  class="input-field w-full px-5 py-3.5 rounded-2xl"
+                  placeholder="john@example.com">
+                <p class="error-msg" data-for="email">Please enter a valid email.</p>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="phone" class="block text-sm font-semibold text-gray-300 mb-2.5 ml-1">Phone Number</label>
+                <input type="tel" id="phone" name="phone"
+                  class="input-field w-full px-5 py-3.5 rounded-2xl"
+                  placeholder="+61 400 000 000">
+              </div>
+              <div>
+                <label for="subject" class="block text-sm font-semibold text-gray-300 mb-2.5 ml-1">Subject <span class="text-iron-green">*</span></label>
+                <div class="relative">
+                  <select id="subject" name="subject" required class="input-field w-full px-5 py-3.5 rounded-2xl appearance-none pr-10">
+                    <option value="" disabled selected hidden>Select a topic...</option>
+                    <option value="Free Trial Class" class="bg-iron-card">Free Trial Class</option>
+                    <option value="Membership Inquiry" class="bg-iron-card">Membership Inquiry</option>
+                    <option value="Class Schedule" class="bg-iron-card">Class Schedule</option>
+                    <option value="Personal Training" class="bg-iron-card">Personal Training</option>
+                    <option value="Youth Programs" class="bg-iron-card">Youth Programs</option>
+                    <option value="Other" class="bg-iron-card">Other</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </div>
+                </div>
+                <p class="error-msg" data-for="subject">Please select a subject.</p>
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-semibold text-gray-300 mb-2.5 ml-1">Message <span class="text-iron-green">*</span></label>
+              <textarea id="message" name="message" rows="5" required
+                class="input-field w-full px-5 py-4 rounded-2xl resize-none"
+                placeholder="Tell us what you're looking for..."></textarea>
+              <p class="error-msg" data-for="message">Please enter your message.</p>
+            </div>
+
+            <button type="submit" id="submit-btn"
+              class="w-full inline-flex items-center justify-center gap-3 px-8 py-4 mt-2 rounded-2xl bg-gradient-to-r from-ygreen-bottom via-ygreen-top to-iron-green text-white font-bold text-lg tracking-wide btn-glow animate-pulse-glow transition-all disabled:opacity-60 disabled:cursor-not-allowed">
+              <span id="btn-text">Send Message</span>
+              <span id="btn-spinner" class="hidden"><span class="spinner"></span></span>
+              <svg id="btn-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+
+            <p id="form-status" class="text-center text-sm hidden font-medium"></p>
+          </form>
+
+          <!-- SUCCESS STATE -->
+          <div id="success-state" class="hidden text-center py-10">
+            <div class="success-checkmark">
+              <svg viewBox="0 0 24 24" class="animate-draw-check">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <h3 class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">Message Sent!</h3>
+            <p class="text-gray-400 mb-8 text-lg font-light">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+            <button id="send-another" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/10 hover:border-iron-green hover:bg-iron-green/5 hover:text-iron-green transition-all text-sm font-semibold tracking-wide">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              Send another message
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- CTA -->
+<section class="py-16 md:py-24 border-t border-white/5 animate-fade-in bg-gradient-to-b from-iron-dark to-black">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight animate-fade-in-up delay-100 opacity-0-init">Prefer to book directly?</h2>
+    <p class="text-gray-400 text-lg md:text-xl mb-10 font-light animate-fade-in-up delay-200 opacity-0-init">Skip the form and claim your free introductory class right now.</p>
+    <a href="https://ironhookboxing.sites.zenplanner.com/sign-up-now.cfm" class="inline-flex px-8 md:px-10 py-4 rounded-full bg-gradient-to-r from-ygreen-bottom via-ygreen-top to-iron-green text-white font-bold text-lg btn-glow animate-pulse-glow animate-expand delay-300 opacity-0-init tracking-wide">CLAIM YOUR FREE CLASS</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#0f0f0f] border-t border-white/5 pt-16 md:pt-20 pb-8 animate-fade-in">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12 mb-16">
+      <div class="sm:col-span-2 md:col-span-1 animate-slide-in-right delay-100 opacity-0-init">
+        <a href="/" class="flex items-center gap-3 inline-block transition-transform hover:scale-105"><img src="/images/Screenshot 2026-05-23 215930-Photoroom.png" alt="Logo" class="h-14 w-auto"></a>
+        <p class="text-gray-500 text-sm mt-6 font-light">Developed by ehsanagency</p>
+      </div>
+      <div class="animate-fade-in-up delay-200 opacity-0-init">
+        <h4 class="text-white font-bold text-lg mb-5 tracking-wide">About us</h4>
+        <ul class="space-y-4">
+          <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm font-medium">Our Story</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm font-medium">T & C</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm font-medium">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="animate-fade-in-up delay-300 opacity-0-init">
+        <h4 class="text-white font-bold text-lg mb-5 tracking-wide">Socials</h4>
+        <ul class="space-y-4">
+          <li><a href="https://instagram.com/ironhookboxing" class="text-gray-400 hover:text-iron-green transition-colors text-sm font-medium">Instagram</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm font-medium">Facebook</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-iron-green transition-colors text-sm font-medium">Tiktok</a></li>
+        </ul>
+      </div>
+      <div class="animate-slide-in-left delay-400 opacity-0-init">
+        <h4 class="text-white font-bold text-lg mb-5 tracking-wide">Visit us</h4>
+        <p class="text-gray-400 text-sm leading-loose font-medium">646 North East Road,<br>Adelaide, South Australia</p>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-gray-500 text-sm text-center md:text-left font-light w-full">Copyright © 2026 Iron Hook | Powered by Astra WordPress Theme</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FORM SUBMISSION SCRIPT -->
+<script>
+  // ⚠️ REPLACE THIS WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzOZ4YnvF60fZ1_smqqAD6YfIqcSIUbXQr_h0WWsozXzgiofvgpmY7T4ckyEvoRhtKWig/exec';
+
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = document.getElementById('btn-text');
+  const btnSpinner = document.getElementById('btn-spinner');
+  const btnIcon = document.getElementById('btn-icon');
+  const formStatus = document.getElementById('form-status');
+  const successState = document.getElementById('success-state');
+  const sendAnother = document.getElementById('send-another');
+
+  // Clear error on input
+  document.querySelectorAll('.input-field').forEach(input => {
+    input.addEventListener('input', () => {
+      input.classList.remove('input-error', 'shake');
+      const err = document.querySelector(`.error-msg[data-for="${input.name}"]`);
+      if (err) err.classList.remove('show');
+    });
+  });
+
+  function showError(fieldName, message) {
+    const field = document.getElementById(fieldName);
+    const err = document.querySelector(`.error-msg[data-for="${fieldName}"]`);
+    if (field) {
+      field.classList.add('input-error', 'shake');
+      setTimeout(() => field.classList.remove('shake'), 400);
+    }
+    if (err) {
+      if (message) err.textContent = message;
+      err.classList.add('show');
+    }
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function validate() {
+    let valid = true;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+
+    if (!name) { showError('name'); valid = false; }
+    if (!email || !validateEmail(email)) { showError('email'); valid = false; }
+    if (!subject) { showError('subject'); valid = false; }
+    if (!message) { showError('message'); valid = false; }
+
+    return valid;
+  }
+
+  function setLoading(loading) {
+    submitBtn.disabled = loading;
+    btnText.textContent = loading ? 'Sending...' : 'Send Message';
+    btnSpinner.classList.toggle('hidden', !loading);
+    btnIcon.classList.toggle('hidden', loading);
+    if (loading) submitBtn.classList.remove('animate-pulse-glow');
+    else submitBtn.classList.add('animate-pulse-glow');
+  }
+
+  function showStatus(message, isError) {
+    formStatus.textContent = message;
+    formStatus.className = `text-center text-sm mt-3 font-medium ${isError ? 'text-red-400' : 'text-iron-green'}`;
+    formStatus.classList.remove('hidden');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formStatus.classList.add('hidden');
+
+    if (!validate()) return;
+
+    const data = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      subject: document.getElementById('subject').value,
+      message: document.getElementById('message').value.trim(),
+      timestamp: new Date().toISOString()
+    };
+
+    setLoading(true);
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      });
+
+      setLoading(false);
+      
+      // Smoothly hide form and show success state
+      form.style.opacity = '0';
+      setTimeout(() => {
+        form.classList.add('hidden');
+        form.style.opacity = '1';
+        successState.classList.remove('hidden');
+        successState.style.opacity = '0';
+        setTimeout(() => {
+          successState.style.transition = 'opacity 0.5s ease';
+          successState.style.opacity = '1';
+        }, 50);
+        successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+      
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      showStatus('Something went wrong. Please try again or email us directly.', true);
+    }
+  });
+
+  sendAnother.addEventListener('click', () => {
+    successState.style.opacity = '0';
+    setTimeout(() => {
+      form.reset();
+      successState.classList.add('hidden');
+      form.classList.remove('hidden');
+      formStatus.classList.add('hidden');
+      form.style.opacity = '0';
+      setTimeout(() => {
+        form.style.transition = 'opacity 0.5s ease';
+        form.style.opacity = '1';
+      }, 50);
+    }, 300);
+  });
+</script>
+
+</body>
+</html>
