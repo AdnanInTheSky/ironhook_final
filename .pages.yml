@@ -1,16 +1,17 @@
+# .pages.yml — Pages CMS configuration for Iron Hook Boxing
+# Docs: https://pagescms.org/docs/configuration/
+
 media:
   input: images
   output: /images
 
 content:
 
-  # PROGRAMS
-
+  # ── PROGRAMS ─────────────────────────────────────────────────────
   - name: programs
     label: Programs
     type: collection
     path: content/programs
-
     filename: "{fields.title}.md"
 
     view:
@@ -19,7 +20,6 @@ content:
         - schedule
 
     fields:
-
       - name: title
         label: Program Title
         type: string
@@ -44,21 +44,19 @@ content:
         label: Description
         type: rich-text
 
-  # SPONSORS
-
+  # ── SPONSORS ─────────────────────────────────────────────────────
   - name: sponsors
     label: Sponsors
     type: collection
     path: content/sponsors
-
     filename: "{fields.name}.md"
 
     view:
       fields:
         - name
+        - website
 
     fields:
-
       - name: name
         label: Sponsor Name
         type: string
@@ -73,3 +71,74 @@ content:
         label: Website
         type: string
         required: true
+
+  # ── BLOG POSTS ───────────────────────────────────────────────────
+  - name: blog
+    label: Blog Posts
+    type: collection
+    path: content/blog
+    filename: "{year}-{month}-{day}-{fields.title}.md"
+
+    view:
+      fields:
+        - title
+        - date
+        - author
+        - image
+
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+
+      - name: date
+        label: Published Date
+        type: date
+        options:
+          format: yyyy-MM-dd
+        required: true
+
+      - name: author
+        label: Author
+        type: string
+
+      - name: image
+        label: Hero Image
+        type: image
+
+      - name: excerpt
+        label: Excerpt
+        type: text
+
+      - name: tags
+        label: Tags
+        type: list
+
+      - name: body
+        label: Content
+        type: rich-text
+
+  # ── SITE SETTINGS (optional) ─────────────────────────────────────
+  - name: site
+    label: Site Settings
+    type: file
+    path: content/site.json
+
+    fields:
+      - name: title
+        label: Site Title
+        type: string
+        default: Iron Hook Boxing
+
+      - name: description
+        label: Meta Description
+        type: text
+
+      - name: phone
+        label: Phone Number
+        type: string
+
+      - name: email
+        label: Email
+        type: string
