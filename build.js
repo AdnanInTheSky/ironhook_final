@@ -23,7 +23,7 @@ const CONFIG = {
   programsDir: "./content/programs",
   sponsorsDir: "./content/sponsors",
   mainTemplate: "./template.html",
-  mainOutput: "./public/index.html",
+  mainOutput: "./index.html", // Changed to root
   
   // Blog
   blogContentDir: "./content/blog",
@@ -95,8 +95,8 @@ function renderPrograms(programs) {
 function renderSponsors(sponsors) {
   return sponsors.map(sponsor => `
     <a href="${sponsor.website}" target="_blank" 
-       class="sponsor-logo bg-iron-card border border-gray-800 rounded-xl p-6 flex items-center justify-center aspect-[3/2]">
-      <img src="${sponsor.logo}" alt="${sponsor.name}" class="max-h-16 object-contain" />
+       class="sponsor-logo bg-iron-card border border-gray-800 rounded-xl p-2 flex items-center justify-center aspect-[3/2] overflow-hidden">
+      <img src="${sponsor.logo}" alt="${sponsor.name}" class="w-full h-full object-contain" />
     </a>
   `).join("");
 }
@@ -279,10 +279,8 @@ function buildMainSite() {
   const programs = loadMarkdown(CONFIG.programsDir);
   const sponsors = loadMarkdown(CONFIG.sponsorsDir);
   
-  ensureDir("./public");
-  
-  // Optional: generate data.json for JS consumption
-  fs.writeFileSync("./public/data.json", JSON.stringify({ programs, sponsors }, null, 2));
+  // Optional: generate data.json for JS consumption (now in root)
+  fs.writeFileSync("./data.json", JSON.stringify({ programs, sponsors }, null, 2));
   
   const template = fs.readFileSync(CONFIG.mainTemplate, "utf-8");
   const finalHTML = template
